@@ -11,8 +11,7 @@ std::unique_ptr<Image> loadImage(const char *filename) {
 
   const auto error = lodepng::decode(buffer, width, height, filename);
   if (error) {
-    throw std::runtime_error(
-      std::string{"Falha carregando imagem: "} + lodepng_error_text(error));
+    throw std::runtime_error(lodepng_error_text(error));
   }
 
   auto image = std::make_unique<Image>(width, height);
@@ -50,8 +49,7 @@ void writeImage(const char *filename, const Image &image) {
 
   const auto error = lodepng::encode(filename, buffer, width, height);
   if (error) {
-    throw std::runtime_error(
-      std::string{"Falha salvando imagem: "} + lodepng_error_text(error));
+    throw std::runtime_error(lodepng_error_text(error));
   }
 }
 

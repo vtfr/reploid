@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
     logger.log("Operação realizada com sucesso");
 
   } catch (std::exception &e) {
-    logger.log([=](auto& s) { s << "Erro: " << e.what(); });
+    logger.log([&](auto& s) { s << "Erro: " << e.what(); });
     return -3;
   }
 }
