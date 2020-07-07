@@ -4,9 +4,9 @@
 
 namespace graphics {
 
-std::unique_ptr<Image> LoadImage(const char *filename) {
-  unsigned width;
-  unsigned height;
+std::unique_ptr<Image> loadImage(const char *filename) {
+  unsigned int width;
+  unsigned int height;
   std::vector<unsigned char> buffer;
 
   const auto error = lodepng::decode(buffer, width, height, filename);
@@ -22,23 +22,22 @@ std::unique_ptr<Image> LoadImage(const char *filename) {
       const auto g = buffer[index + 1];
       const auto b = buffer[index + 2];
 
-      image->SetColorAt({x, y}, {r, g, b});
+      image->set({x, y}, {r, g, b});
     }
   }
 
   return image;
 }
 
-void WriteImage(const char *filename, const Image &image) {
-  const auto width = image.GetWidth();
-  const auto height = image.GetHeight();
+void writeImage(const char *filename, const Image &image) {
+  const auto [width, height] = image.getDimensions();
 
   std::vector<unsigned char> buffer;
   buffer.resize(width * height * 4);
 
   for (auto y = 0; y < height; y++) {
     for (auto x = 0; x < width; x++) {
-      const auto color = image.GetColorAt({x, y});
+      const auto color = image.get({x, y});
       const auto index = 4 * (y * width + x);
 
       buffer[index + 0] = color.r;
@@ -52,4 +51,4 @@ void WriteImage(const char *filename, const Image &image) {
   // todo
 }
 
-} // namespace graphics
+}  // namespace graphics

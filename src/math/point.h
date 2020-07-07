@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>  // std::hash
+#include <ostream>     // std::ostream
 
 namespace math {
 
@@ -11,6 +12,7 @@ struct Point {
   Component y;
 
   Point() : Point{0, 0} {}
+  Point(const Point &other) : Point(other.x, other.y) {}
   Point(Component x, Component y) : x{x}, y{y} {}
 
   void operator=(const Point &other) {
@@ -33,6 +35,8 @@ struct Point {
 };
 
 }  // namespace math
+
+std::ostream &operator<<(std::ostream &os, const math::Point &point);
 
 namespace std {
 template <>

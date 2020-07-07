@@ -1,7 +1,6 @@
 #include "routing/a_star_router.h"
 
 #include <algorithm>      // std::reverse, std::find
-#include <iostream>       //std::cout, std::endl
 #include <set>            // std::set
 #include <stdexcept>      //std::runtime_exception
 #include <unordered_map>  // std::unordered_map
@@ -57,8 +56,9 @@ std::unique_ptr<Route> AStarRouter::route(const Map& map,
       return std::make_unique<Route>(reconstruct(cameFrom, current.location));
     }
 
-    std::cout << "Current: (" << current.location.x << ", "
-              << current.location.y << "). Cost: " << current.cost << std::endl;
+    logger.log([&](auto& s) {
+      s << "Current: " << current.location << ". Cost: " << current.cost;
+    });
 
     std::remove(std::begin(queue), std::end(queue), current);
     closed.push_back(current.location);

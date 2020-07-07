@@ -5,14 +5,10 @@
 #include <utility>    // std::pair, std::make_pair
 #include <vector>     //std::vector
 
-#include "math/point.h"  // Point
+#include "data/invalid_position_error.h"  // data::InvalidPositionError
+#include "math/point.h"                   // Point
 
 namespace data {
-
-class InvalidPositionException : public std::runtime_error {
- public:
-  InvalidPositionException() : std::runtime_error("Invalid position"){};
-};
 
 template <class T>
 class Grid {
@@ -37,7 +33,7 @@ class Grid {
   unsigned int getHeight() const { return height; }
 
   bool isInbound(const Position& position) const {
-    return position.x > 0 && position.y > 0 && position.x < width &&
+    return position.x >= 0 && position.y >= 0 && position.x < width &&
            position.y < height;
   }
 
@@ -55,8 +51,8 @@ class Grid {
 
  private:
   void assertInbound(const Position& position) const {
-    if (position.x >= width || position.y >= height) {
-      throw InvalidPositionException();
+    if (!isInbound(position)) {
+      throw InvalidPositionError(position);
     }
   }
 

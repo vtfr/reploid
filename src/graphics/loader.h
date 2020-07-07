@@ -1,12 +1,13 @@
 #pragma once
 
+#include <memory>  // std::unique_ptr
+
 #include "graphics/image.h"
-#include <memory> // std::unique_ptr
 
 namespace graphics {
 
-std::unique_ptr<Image> LoadImage(const char *filename);
+std::unique_ptr<Image> loadImage(const char *filename);
 
-void WriteImage(const char *filename, const Image &image);
+void writeImage(const char *filename, const Image &image);
 
-} // namespace graphics
+}  // namespace graphics

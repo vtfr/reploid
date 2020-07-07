@@ -7,21 +7,22 @@
 #include "math/distance.h"          // math::distance
 #include "routing/a_star_router.h"  // AStarRouter
 #include "routing/map.h"            // Map
+#include "sys/system_logger.h"      // SystemLogger
 
 using namespace routing;
 using namespace graphics;
+using namespace sys;
 
-std::unique_ptr<Map> ConverterParaMapa(const Image &imagem,
+std::unique_ptr<Map> converterParaMapa(const Image &imagem,
                                        Map::Location &start,
                                        Map::Location &end) {
-  const auto width = imagem.GetWidth();
-  const auto height = imagem.GetHeight();
+  const auto [width, height] = imagem.getDimensions();
 
   auto map = std::make_unique<Map>(width, height);
 
   for (auto y = 0; y < height; y++) {
     for (auto x = 0; x < width; x++) {
-      const auto color = imagem.GetColorAt({x, y});
+      const auto color = imagem.get({x, y});
 
       if (color == Color::RED()) {
         start = Map::Location(x, y);
@@ -40,7 +41,7 @@ std::unique_ptr<Map> ConverterParaMapa(const Image &imagem,
   return map;
 }
 
-std::unique_ptr<Image> ConverterParaImagem(const Map &map, const Route &route) {
+std::unique_ptr<Image> converterParaImagem(const Map &map, const Route &route) {
   auto [width, height] = map.getDimensions();
 
   auto image = std::make_unique<Image>(width, height);
@@ -48,41 +49,58 @@ std::unique_ptr<Image> ConverterParaImagem(const Map &map, const Route &route) {
   for (auto y = 0; y < height; y++) {
     for (auto x = 0; x < width; x++) {
       if (map.isOccupied({x, y})) {
-        image->SetColorAt({x, y}, Color::BLACK());
+        image->set({x, y}, Color::BLACK());
       } else {
-        image->SetColorAt({x, y}, Color::WHITE());
+        image->set({x, y}, Color::WHITE());
       }
     }
   }
 
   for (auto &point : route.points) {
-    image->SetColorAt({point.x, point.y}, Color::RED());
+    image->set({point.x, point.y}, Color::RED());
   }
 
   return image;
 }
 
+static const Map::Location EMPTY{-1, -1};
+
 int main(int argc, char **argv) {
+  SystemLogger logger;
+
   try {
-    Map::Location start {-1, -1};
-    Map::Location end {-1, -1};
+    Map::Location start{EMPTY};
+    Map::Location end{EMPTY};
 
-    const auto imagem = LoadImage("./entrada.png");
-    const auto mapa = ConverterParaMapa(*imagem, start, end);
+    const auto imagem = loadImage("./entrada.png");
+    const auto mapa = converterParaMapa(*imagem, start, end);
 
-    std::cout << "start: (" << start.x << ", " << start.y << ")" << std::endl
-              << "end: (" << end.x << ", " << end.y << ")" << std::endl;
-
-    AStarRouter router(math::distance);
-    const auto route = router.route(*mapa, start, end);
-
-    for (auto &point : route->points) {
-      std::cout << point.x << ", " << point.y << std::endl;
+    if (start == EMPTY) {
+      logger.log(
+          "Erro: posição inicial desconhecida. Verifique se existe um ponto "
+          "com a cor exata #FF0000");
+      return -1;
     }
 
-    graphics::WriteImage("./saida.png", *ConverterParaImagem(*mapa, *route));
-    std::cout << "Sucesso!\n";
+    if (end == EMPTY) {
+      logger.log(
+          "Erro: posição final desconhecida. Verifique se existe um ponto "
+          "com a cor exata #00FF00");
+      return -2;
+    }
+
+    logger.log([=](auto &s) { s << "Start position: " << start; });
+    logger.log([=](auto &s) { s << "Goal position: " << end; });
+
+    AStarRouter router(math::distance, logger);
+    const auto route = router.route(*mapa, start, end);
+
+    graphics::writeImage("./saida.png", *converterParaImagem(*mapa, *route));
+
+    logger.log("Operação realizada com sucesso");
+
   } catch (std::exception &e) {
-    std::cerr << "Erro: " << e.what() << std::endl;
+    logger.log([=](auto& s) { s << "Erro: " << e.what(); });
+    return -3;
   }
 }
