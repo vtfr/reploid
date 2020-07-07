@@ -23,6 +23,8 @@ Foi desenvolvido um sistema simples para carregamendo de imagens PNG, que, com b
 - a cor vermelha pura (#FF0000) representa o ponto de partida;
 - a cor verde pura (#00FF00) representa o destino;
 
+O Occupancy Grid desenvolvido (`entrada.png`) possui a proporção de 1:5 (1 pixel para 5 metros), tendo resolução de 45x60 pixels (9m x 12m).
+
 Com base nas informações obtidas na etapa anterior, o algoritmo A* é aplicado para encontrar o caminho ótimo entre o ponto de partida e o ponto de destino.
 
 O trajeto obtido é, por sua vez, representado no mapa de entrada. Retornado pelo arquivo `saida.png` criado no diretório atual.
