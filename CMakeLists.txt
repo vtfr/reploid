@@ -13,11 +13,11 @@ include_directories(src/**)
 add_executable(megaman src/main.cc)
 target_sources(megaman
     PRIVATE 
-        ${CMAKE_CURRENT_LIST_DIR}/src/graphics/image.cc
         ${CMAKE_CURRENT_LIST_DIR}/src/graphics/loader.cc
         ${CMAKE_CURRENT_LIST_DIR}/src/routing/map.cc
         ${CMAKE_CURRENT_LIST_DIR}/src/routing/a_star_router.cc
         ${CMAKE_CURRENT_LIST_DIR}/src/math/distance.cc
+        ${CMAKE_CURRENT_LIST_DIR}/src/math/point.cc
 )
 target_link_libraries(megaman lodepng)
 target_include_directories(megaman PUBLIC vendor)
