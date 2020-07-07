@@ -43,7 +43,7 @@ O trajeto obtido é, por sua vez, representado no mapa de entrada. Retornado pel
     
 ### Demonstração
 
-https://www.youtube.com/watch?v=1VFxDcEkMv4
+https://www.youtube.com/watch?v=1VFxDcEkMv4 (vídeo utiliza uma occupancy grid reduzida para fins demonstrativos)
 
 ![Entrada](entrada.png?raw=true "Entrada")
 ![Saida](saida.png?raw=true "Saída")
