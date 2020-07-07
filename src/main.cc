@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
 
     const auto route = router.route(*mapa, start, end);
 
-    graphics::writeImage("./saida.png", *converterParaImagem(*mapa, *route));
+    writeImage("./saida.png", *converterParaImagem(*mapa, *route));
 
     logger.log("Operação realizada com sucesso");
 
