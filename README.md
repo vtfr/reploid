@@ -36,6 +36,7 @@ O trajeto obtido é, por sua vez, representado no mapa de entrada. Retornado pel
     git clone https://github.com/vtfr/reploid.git
     cd reploid
     cmake .
+    make -j 3
     ./build/megaman
     
 ### Demonstração
