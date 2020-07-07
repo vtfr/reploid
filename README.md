@@ -35,7 +35,7 @@ O trajeto obtido é, por sua vez, representado no mapa de entrada. Retornado pel
 
     git clone https://github.com/vtfr/reploid.git
     cd reploid
-    cmake --build /home/vtfr/Projects/ros/build --config Release --target all -- -j 6
+    cmake .
     ./build/megaman
     
 ### Demonstração
