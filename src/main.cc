@@ -57,16 +57,17 @@ std::unique_ptr<Image> converterParaImagem(const Map &map, const Route &route) {
   }
 
   for (auto &point : route.points) {
-    image->set({point.x, point.y}, Color::RED());
+    image->set({point.x, point.y}, Color::BLUE());
   }
 
   return image;
 }
 
-static const Map::Location EMPTY{-1, -1};
-
 int main(int argc, char **argv) {
+  static const Map::Location EMPTY{-1, -1};
+
   SystemLogger logger;
+  AStarRouter router{math::distance, logger};
 
   try {
     Map::Location start{EMPTY};
@@ -92,7 +93,6 @@ int main(int argc, char **argv) {
     logger.log([=](auto &s) { s << "Start position: " << start; });
     logger.log([=](auto &s) { s << "Goal position: " << end; });
 
-    AStarRouter router(math::distance, logger);
     const auto route = router.route(*mapa, start, end);
 
     graphics::writeImage("./saida.png", *converterParaImagem(*mapa, *route));
@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
     logger.log("Operação realizada com sucesso");
 
   } catch (std::exception &e) {
-    logger.log([&](auto& s) { s << "Erro: " << e.what(); });
+    logger.log([&](auto &s) { s << "Erro: " << e.what(); });
     return -3;
   }
 }
