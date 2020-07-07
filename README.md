@@ -37,7 +37,7 @@ O trajeto obtido é, por sua vez, representado no mapa de entrada. Retornado pel
     cd reploid
     cmake .
     make -j 3
-    ./build/megaman
+    ./megaman
     
 ### Demonstração
 
