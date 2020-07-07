@@ -20,8 +20,10 @@ Algoritmo utilizado para roteamento: A*
 Foi desenvolvido um sistema simples para carregamendo de imagens PNG, que, com base na cor de cada pixel, realiza a construção do occupancy grid e dos extremos do trajeto:
 - pontos pretos representam obstáculos fixos;
 - pontos brancos representam espaços vagos;
-- a cor vermelha pura (#FF0000) representa o ponto de partida;
-- a cor verde pura (#00FF00) representa o destino;
+- a cor vermelha pura (`#FF0000`) representa o ponto de partida;
+- a cor verde pura (`#00FF00`) representa o destino;
+
+O Occupancy Grid desenvolvido (`entrada.png`) possui a proporção de 1:5 (1 pixel para 5 metros), tendo resolução de 45x60 pixels (9m x 12m).
 
 Com base nas informações obtidas na etapa anterior, o algoritmo A* é aplicado para encontrar o caminho ótimo entre o ponto de partida e o ponto de destino.
 
@@ -35,9 +37,13 @@ O trajeto obtido é, por sua vez, representado no mapa de entrada. Retornado pel
 
     git clone https://github.com/vtfr/reploid.git
     cd reploid
-    cmake --build /home/vtfr/Projects/ros/build --config Release --target all -- -j 6
-    ./build/megaman
+    cmake .
+    make -j 3
+    ./megaman
     
 ### Demonstração
 
-https://www.youtube.com/watch?v=aC-tetMdQJY&feature=youtu.be    
+https://www.youtube.com/watch?v=a8kH2-eqJ7g
+
+![Entrada](entrada.png?raw=true "Entrada")
+![Saida](saida.png?raw=true "Saída")
