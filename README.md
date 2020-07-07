@@ -20,8 +20,8 @@ Algoritmo utilizado para roteamento: A*
 Foi desenvolvido um sistema simples para carregamendo de imagens PNG, que, com base na cor de cada pixel, realiza a construção do occupancy grid e dos extremos do trajeto:
 - pontos pretos representam obstáculos fixos;
 - pontos brancos representam espaços vagos;
-- a cor vermelha pura (#FF0000) representa o ponto de partida;
-- a cor verde pura (#00FF00) representa o destino;
+- a cor vermelha pura (`#FF0000`) representa o ponto de partida;
+- a cor verde pura (`#00FF00`) representa o destino;
 
 O Occupancy Grid desenvolvido (`entrada.png`) possui a proporção de 1:5 (1 pixel para 5 metros), tendo resolução de 45x60 pixels (9m x 12m).
 
@@ -43,4 +43,5 @@ O trajeto obtido é, por sua vez, representado no mapa de entrada. Retornado pel
     
 ### Demonstração
 
-https://www.youtube.com/watch?v=a8kH2-eqJ7g
+![Entrada](entrada.png?raw=true "Entrada")
+![Saida](saida.png?raw=true "Saída")
